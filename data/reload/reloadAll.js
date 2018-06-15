@@ -7,6 +7,9 @@ const incSupp = require('./incursionSupplement.js');
 
 const dataStorePath = "./dataStore";
 const indexStore = dataStorePath + "/index.json";
+const timestamp = dataStorePath + "/time.flag";
+
+const moment = require('moment');
 
 const reload = {
     reload: () => {
@@ -26,6 +29,8 @@ const reload = {
 
         poeNinja.reload();
         incSupp.reload();
+
+        fs.writeFileSync(timestamp, moment().unix());
 
         return "Data reloaded.";
     }

@@ -10,7 +10,6 @@ const dataStorePath = "./dataStore";
 const indexStore = dataStorePath + "/index.json";
 
 var nameIdList = [];
-var count = 0;
 
 const q = async.queue((itemObj, callback) => {
     _writeToIndex(itemObj, callback);
@@ -51,8 +50,6 @@ q.drain = () => {
     });
 
     fs.writeFileSync(indexStore, JSON.stringify(dataHolder, null, 2));
-
-    console.log("Index queue has been emptied. ", count);
 };
 
 
@@ -60,12 +57,12 @@ q.drain = () => {
 const _writeToIndex = (itemObj, callBack) => {
     nameIdList.push(itemObj);
 
-    writeDataAync(dataStorePath + "/" + itemObj.id + ".json", itemObj);
+    writeDataAsync(dataStorePath + "/" + itemObj.id + ".json", itemObj);
 
     callBack();
 };
 
-const writeDataAync = (path, data) => {
+const writeDataAsync = (path, data) => {
     fs.exists(path, (exists) => {
         if (exists) {
             console.log("file (" + path + ") exists");
@@ -84,7 +81,7 @@ const writeDataAync = (path, data) => {
 };
 
 const queueAdd = (itemObj) => {
-    count++;
+
     q.push(itemObj, (err) => {
         if (err) {
             return console.log('error in adding tasks to queue');
