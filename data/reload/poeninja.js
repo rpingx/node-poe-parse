@@ -1,73 +1,77 @@
 /**
  * Created by rxudsk on 6/14/2018.
  */
-const fs = require('fs');
 const dataSources = require("./poeninja.json");
 const request = require('request');
-const async = require('async');
+const writerService = require('./writerQService.js');
 
-const indexStore = "./dataStore/index.json";
+const getParser = (url) => {
+    var type = url.substring(url.indexOf("type=") + 5);
 
-const q = async.queue((itemObj, callback) => {
-    _writeToIndex(itemObj, callback);
-}, 1);
-
-q.drain = () => console.log("Index queue has been emptied.");
-
-const _writeToIndex = (itemObj, callBack) => {
-    fs.readFile(indexStore, (err, data) => {
-
-        var dataHolder;
-        if (err) {
-            dataHolder = {};
-        } else {
-            try {
-                dataHolder = JSON.parse(data);
-            } catch (e) {
-                dataHolder = {};
-            }
-        }
-
-
-        dataHolder[itemObj.name] = itemObj.id;
-
-        fs.writeFile(indexStore, JSON.stringify(dataHolder, null, 2), (err) => {
-            // throws an error, you could also catch it here
-            if (err) {
-                console.log("error writing data: ", dataHolder);
-                throw err;
-            }
-
-            // success case, the file was saved
-            console.log('data saved!');
-        });
-
-        callBack();
-    });
+    if (url.indexOf('currency') > -1) {
+        return getCurrencyParser(type);
+    } else {
+        return getNoncurrencyParser(type);
+    }
 };
 
-const queueAdd = (itemObj) => {
-    q.push(itemObj, (err) => {
-        if (err) {
-            return console.log('error in adding tasks to queue');
-        }
-        console.log('pushed');
-    });
+const getCurrencyParser = (type) => {
+    return (error, response, body) => {
+        var data = JSON.parse(body);
+
+        var nameMap = data.currencyDetails.reduce(
+            (accrue, entry) => {
+                accrue[entry.name] = entry;
+
+                return accrue;
+            }, {}
+        );
+
+        data.lines.forEach((entry)=> {
+                var name = entry.currencyTypeName;
+                var nameObj = nameMap[name];
+
+                var itemObj = {};
+                itemObj.id = type + "." + nameObj.id;
+                itemObj.name = name;
+                itemObj.icon = nameObj.icon;
+                itemObj.desc = name;
+                itemObj.chaosValue = entry.chaosEquivalent;
+
+                writerService(itemObj);
+            }
+        );
+    };
+};
+
+
+const getNoncurrencyParser = (type) => {
+    return (error, response, body) => {
+        var data = JSON.parse(body);
+
+        data.lines.forEach((entry)=> {
+                var itemObj = {};
+                itemObj.id = type + "." + entry.id;
+                itemObj.name = entry.name;
+                itemObj.icon = entry.icon;
+                itemObj.desc = entry.flavourText;
+                itemObj.chaosValue = entry.chaosValue;
+                itemObj.links = entry.links;
+                itemObj.variant = entry.variant;
+                itemObj.baseType = entry.baseType;
+
+                writerService(itemObj);
+            }
+        );
+    };
 };
 
 const parser = {
     reload: () => {
-        request("https://poe.ninja/api/data/currencyoverview?league=Incursion&type=Currency",
-            (error, response, body) => {
-                var data = JSON.parse(body);
-                queueAdd({id: 12, name: "Hats"});
-                queueAdd({id: 45, name: "Herm"});
-                queueAdd({id: 67, name: "Hlerm"});
-                queueAdd({id: 120, name: "Boots"});
-            }
-        );
-
-        return "Working on ";
+        dataSources.forEach((src) => {
+            console.log(src);
+            request(src, getParser(src));
+        });
     }
 
 };

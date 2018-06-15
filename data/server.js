@@ -10,8 +10,8 @@ app.get('/', function (req, res) {
 });
 
 app.get('/reload', function (req, res) {
-    var poeNinja = require('./reload/poeninja.js');
-    res.send(poeNinja.reload());
+    var reload = require('./reload/reloadAll.js');
+    res.send(reload.reload());
 });
 
 app.listen(80);

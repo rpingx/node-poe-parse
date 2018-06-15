@@ -1,0 +1,73 @@
+[
+  {
+    "id": "UniqueArmour.shadow",
+    "name": "Sacrificial Garb",
+    "icon": "http://web.poecdn.com/image/Art/2DItems/Armours/BodyArmours/ShadowStitch.png?scale=1&scaleIndex=0&w=2&h=3",
+    "desc": "Destined for sacrifice, they were dressed in garments \r|that blurred the lines between this world and the next.",
+    "links": 6,
+    "baseType": "Sacrificial Garb"
+  },
+  {
+    "id": "Vial.Awakening",
+    "name": "Vial of Awakening",
+    "icon": "https://d1u5p3l4wpay3k.cloudfront.net/pathofexile_gamepedia/c/c5/Vial_of_Awakening_inventory_icon.png",
+    "desc": "The eyes of Apep flicker open and the Poisoned One stirs.",
+    "baseType": "Incursion Vial"
+  },
+  {
+    "id": "Vial.Consequence",
+    "name": "Vial of Consequence",
+    "icon": "https://d1u5p3l4wpay3k.cloudfront.net/pathofexile_gamepedia/1/14/Vial_of_Consequence_inventory_icon.png",
+    "desc": "Your actions live but a moment; \r|their repercussions never die.",
+    "baseType": "Incursion Vial"
+  },
+  {
+    "id": "Vial.Dominance",
+    "name": "Vial of Dominance",
+    "icon": "https://d1u5p3l4wpay3k.cloudfront.net/pathofexile_gamepedia/9/97/Vial_of_Dominance_inventory_icon.png",
+    "desc": "Blood, slaves and stone.\r|The timeless edifice of Dominance.",
+    "baseType": "Incursion Vial"
+  },
+  {
+    "id": "Vial.Fate",
+    "name": "Vial of Fate",
+    "icon": "https://d1u5p3l4wpay3k.cloudfront.net/pathofexile_gamepedia/9/9b/Vial_of_Fate_inventory_icon.png",
+    "desc": "Ancient myths of flame, frost and thunder. \r|Will we ever know the way forward?",
+    "baseType": "Incursion Vial"
+  },
+  {
+    "id": "Vial.Sacrifice",
+    "name": "Vial of Sacrifice",
+    "icon": "https://d1u5p3l4wpay3k.cloudfront.net/pathofexile_gamepedia/e/e0/Vial_of_Sacrifice_inventory_icon.png",
+    "desc": "Festivities of blood. Bleeding hearts and screaming lungs.",
+    "baseType": "Incursion Vial"
+  },
+  {
+    "id": "Vial.Summoning",
+    "name": "Vial of Summoning",
+    "icon": "https://d1u5p3l4wpay3k.cloudfront.net/pathofexile_gamepedia/d/d7/Vial_of_Summoning_inventory_icon.png",
+    "desc": "Call to place the demon gods of the past.",
+    "baseType": "Incursion Vial"
+  },
+  {
+    "id": "Vial.Ghost",
+    "name": "Vial of the Ghost",
+    "icon": "https://d1u5p3l4wpay3k.cloudfront.net/pathofexile_gamepedia/9/9a/Vial_of_the_Ghost_inventory_icon.png",
+    "desc": "With great tragedy and power, \r|the dead are netted in anguish.",
+    "baseType": "Incursion Vial"
+  },
+  {
+    "id": "Vial.Ritual",
+    "name": "Vial of the Ritual",
+    "icon": "https://d1u5p3l4wpay3k.cloudfront.net/pathofexile_gamepedia/0/03/Vial_of_the_Ritual_inventory_icon.png",
+    "desc": "The ritual creates order. \r|Both in the minds of men and gods. \r|The ritual creates order.",
+    "baseType": "Incursion Vial"
+  },
+  {
+    "id": "Vial.Transcendence",
+    "name": "Vial of Transcendence",
+    "icon": "https://d1u5p3l4wpay3k.cloudfront.net/pathofexile_gamepedia/5/5e/Vial_of_Transcendence_inventory_icon.png",
+    "desc": "It is not our flesh, our thoughts, or our soul that limits us; \r|it is the distinction between them.",
+    "baseType": "Incursion Vial"
+  }
+]
