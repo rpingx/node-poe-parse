@@ -26,6 +26,8 @@ const reload = {
 
         poeNinja.reload();
         incSupp.reload();
+
+        return "Data reloaded.";
     }
 
 };

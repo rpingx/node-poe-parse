@@ -6,7 +6,7 @@ const app = express();
 const data_path = "data_models";
 
 app.get('/', function (req, res) {
-    res.send('Hmmm, you sent me something? id: ' + req.query.id + ' url: ' +  req.get('host') );
+    res.send('Obsession engine online.');
 });
 
 app.get('/reload', function (req, res) {

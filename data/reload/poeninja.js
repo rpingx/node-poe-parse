@@ -69,7 +69,6 @@ const getNoncurrencyParser = (type) => {
 const parser = {
     reload: () => {
         dataSources.forEach((src) => {
-            console.log(src);
             request(src, getParser(src));
         });
     }
