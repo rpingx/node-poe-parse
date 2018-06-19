@@ -3,9 +3,7 @@
  */
 const fs = require('fs');
 const express = require('express');
-const app = express();
 
-const recipe = "./recipe";
 
 const dataStorePath = "./dataStore";
 const indexStore = dataStorePath + "/index.json";
@@ -13,10 +11,40 @@ const timestamp = dataStorePath + "/time.flag";
 
 const reload = require('./reload/reloadAll.js');
 
+const recipe = require('./recipe/recipe.js');
+
 const moment = require('moment');
+const cors = require('cors');
+
+var app = express();
+app.use(cors());
+
 
 app.get('/', function (req, res) {
     res.send('Obsession engine online.');
+});
+
+app.get('/api/addRecipe', function (req, res) {
+    try {
+        var recipeStr = req.query.recipe;
+
+        if (recipeStr == undefined) {
+            res.send("no item defined");
+        } else {
+            recipe.add(recipeStr);
+            res.send("item added");
+        }
+    } catch (e) {
+        res.send("item failed to be added");
+    }
+});
+
+app.get('/api/getRecipes', function (req, res) {
+    try {
+        res.send(recipe.getAll());
+    } catch (e) {
+        res.send("failed to retrieve all recipes");
+    }
 });
 
 app.get('/api/getItem', function (req, res) {
@@ -65,14 +93,14 @@ app.get('/api/reload', function (req, res) {
     }
 
     if (moment().unix() - unixTime > 900) {
-        res.send(reload.reload());
+        res.send(reload());
     } else {
         res.send("Using cached values.");
     }
 });
 
 app.get('/api/forceReload', function (req, res) {
-    res.send(reload.reload());
+    res.send(reload());
 });
 
 app.listen(80);

@@ -11,30 +11,28 @@ const timestamp = dataStorePath + "/time.flag";
 
 const moment = require('moment');
 
-const reload = {
-    reload: () => {
-        var path = dataStorePath;
-        if (fs.existsSync(path)) {
-            fs.readdirSync(path).forEach(function (file, index) {
-                var curPath = path + "/" + file;
-                if (fs.lstatSync(curPath).isDirectory()) { // recurse
-                    deleteFolderRecursive(curPath);
-                } else { // delete file
-                    fs.unlinkSync(curPath);
-                }
-            });
-        }
-
-        fs.writeFileSync(indexStore, JSON.stringify({}));
-
-        poeNinja.reload();
-        incSupp.reload();
-
-        fs.writeFileSync(timestamp, moment().unix());
-
-        return "Data reloaded.";
+const reload = () => {
+    var path = dataStorePath;
+    if (fs.existsSync(path)) {
+        fs.readdirSync(path).forEach(function (file, index) {
+            var curPath = path + "/" + file;
+            if (fs.lstatSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+            } else { // delete file
+                fs.unlinkSync(curPath);
+            }
+        });
     }
 
+    fs.writeFileSync(indexStore, JSON.stringify({}));
+
+    poeNinja.reload();
+    incSupp.reload();
+
+    fs.writeFileSync(timestamp, moment().unix());
+
+    return "Data reloaded.";
 };
+
 
 module.exports = reload;

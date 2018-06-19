@@ -6,5 +6,8 @@
         <div class="col-md-8">
             <slot></slot>
         </div>
+        <div class="col-md-2">
+            <slot name="button"></slot>
+        </div>
     </div>
 </template>

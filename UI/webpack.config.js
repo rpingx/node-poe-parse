@@ -8,9 +8,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = env => {
-    console.log(path.resolve(__dirname, './dist'));
-    console.log(path.resolve(__dirname, './node_modules/vue/dist/vue.min.js'));
-
     return {
         entry: {
             polyfill: 'babel-polyfill',
