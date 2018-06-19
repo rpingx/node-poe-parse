@@ -54,7 +54,7 @@ const getNoncurrencyParser = (type) => {
                 itemObj.id = type + "." + entry.id;
                 itemObj.name = entry.name;
                 itemObj.icon = entry.icon;
-                itemObj.desc = entry.flavourText;
+                itemObj.desc = entry.flavourText.replace(/\|/g, '');
                 itemObj.chaosValue = entry.chaosValue;
                 itemObj.links = entry.links;
                 itemObj.variant = entry.variant;

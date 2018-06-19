@@ -34,6 +34,15 @@
                         @click="addCustom(outputArr, outputCustom);outputCustom='';">Add
                 </button>
             </formElement>
+            <itemList display="Inputs" :objArr="inputArr"/>
+            <itemList display="Outputs" :objArr="outputArr"/>
+
+            <formElement>
+                <button slot="button" type="button" class="btn btn-success"
+                        @click="save">
+                    Save
+                </button>
+            </formElement>
         </wrapper>
     </div>
 </template>
@@ -42,14 +51,16 @@
     import wrapper from './components/formWrapper.vue';
     import formElement from './components/formElement.vue';
     import autoDropdown from './components/autocompleteDropdown.vue';
+    import itemList from './components/itemList.vue';
 
     import apiService from './services/api';
 
     export default {
         components: {
-            wrapper,
+            autoDropdown,
             formElement,
-            autoDropdown
+            itemList,
+            wrapper
         },
         watch: {
             'inputArr': function () {
@@ -72,35 +83,62 @@
         },
         mounted: function () {
             var self = this;
-            this.$nextTick(function () {
-                apiService.getList(function (list) {
-                    var holder = [];
+            //  This is really ugly... maybe too ugly.
+            this.$nextTick(
+                    function () {
+                        apiService.reload().then(
+                                function () {
+                                    apiService.getList().then(function (list) {
+                                        var holder = [];
 
-                    list.forEach(function (element) {
-                        holder.push({
-                            text: element.name,
-                            value: element.id
-                        });
+                                        list.forEach(function (element) {
+                                            holder.push({
+                                                text: element.name,
+                                                value: element.id
+                                            });
+                                        });
+
+                                        self.itemIDList = holder;
+                                    })
+                                }
+                        );
                     });
-
-                    self.itemIDList = holder;
-                });
-            })
         },
         methods: {
             addId: function (arr, id) {
-                arr.push(
-                        {
-                            id: id
-                        }
-                );
+                if (id != null && id.length > 0) {
+                    arr.push(
+                            {
+                                id: id
+                            }
+                    );
+                }
             },
             addCustom: function (arr, custom) {
-                arr.push(
-                        {
-                            name: custom
-                        }
-                );
+                if (custom.length > 0) {
+                    arr.push(
+                            {
+                                name: custom
+                            }
+                    );
+                }
+            },
+            save: function () {
+                if (this.inputArr.length == 0 && this.outputArr.length == 0) {
+                    console.log("no data; no saving");
+                } else {
+                    apiService.addRecipe({
+                        input: this.inputArr,
+                        output: this.outputArr
+                    });
+                    console.log("saving");
+                    this.inputID = null;
+                    this.inputCustom = "";
+                    this.inputArr = [];
+                    this.outputID = null;
+                    this.outputCustom = "";
+                    this.outputArr = [];
+                }
             }
         }
     };

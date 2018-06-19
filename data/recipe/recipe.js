@@ -25,7 +25,9 @@ getNewPath();
 
 const recipe = {
     add: (objStr) => {
-        fs.writeFile(getNewPath(), objStr, (err) => {
+        var path = getNewPath();
+        objStr.id = count;
+        fs.writeFile(path, JSON.stringify(objStr), (err) => {
             // throws an error, you could also catch it here
             if (err) {
                 console.log("error writing data: ", err);

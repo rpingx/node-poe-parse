@@ -2,12 +2,11 @@
     <div>
         <wrapper>
             <legend>Home</legend>
-            <ul>
-                <li v-for="app in activeApps">
-                    <router-link :to="app.path">{{app.name}}</router-link>
-                    : {{app.desc}}
-                </li>
-            </ul>
+
+            <p v-for="app in activeApps">
+                <router-link :to="app.path">{{app.name}}</router-link>
+                : {{app.desc}}
+            </p>
         </wrapper>
     </div>
 </template>

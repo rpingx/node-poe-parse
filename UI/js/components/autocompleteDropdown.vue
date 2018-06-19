@@ -24,6 +24,7 @@
 <script>
     import utils from "../services/utils.js";
     import Vue from "vue";
+
     export default {
         props: ['value', 'optionsObjArr', 'placeholder', 'noResMess', 'helpInfo', 'autoDef'],
         data: function () {
