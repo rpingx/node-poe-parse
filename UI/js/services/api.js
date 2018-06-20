@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const getData = (url, params) => {
-    console.log(url);
     return axios({
         url: url,
         method: 'GET',
@@ -14,6 +13,7 @@ const getData = (url, params) => {
 export default {
     getItem: (id) => getData("getItem", {"id": id}),
     getList: () => getData("getList"),
+    getRecipes: () => getData("getRecipes"),
     addRecipe: (recipe) => getData("addRecipe", {"recipe": JSON.stringify(recipe)}),
     reload: () => getData("reload")
 }

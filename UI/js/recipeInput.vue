@@ -62,14 +62,6 @@
             itemList,
             wrapper
         },
-        watch: {
-            'inputArr': function () {
-                console.log("inputArr", JSON.stringify(this.inputArr));
-            },
-            'outputArr': function () {
-                console.log("outputArr", JSON.stringify(this.outputArr));
-            }
-        },
         data: function () {
             return {
                 itemIDList: [],

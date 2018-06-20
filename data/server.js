@@ -28,8 +28,6 @@ app.get('/api/addRecipe', function (req, res) {
     try {
         var recipeStr = req.query.recipe;
 
-        console.log(recipeStr);
-
         if (recipeStr == undefined) {
             res.send("no item defined");
         } else {
