@@ -15,5 +15,6 @@ export default {
     getList: () => getData("getList"),
     getRecipes: () => getData("getRecipes"),
     addRecipe: (recipe) => getData("addRecipe", {"recipe": JSON.stringify(recipe)}),
+    saveRecipe: (recipe) => getData("saveRecipe", {"recipe": JSON.stringify(recipe)}),
     reload: () => getData("reload")
 }

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "webpack.config.js",
   "scripts": {
-    "dev": "webpack-dev-server --open --hot --env.apiurl=http://localhost/api/",
+    "dev": "webpack-dev-server --progress --open --hot --env.apiurl=http://localhost/api/",
     "prod": "webpack --progress --hide-modules --env.apiurl=http://localhost/api/"
   },
   "dependencies": {

@@ -4,6 +4,7 @@
 const fs = require('fs');
 
 const dataStorePath = "./recipeStore";
+const jsonfile = require('jsonfile');
 
 var count = 0;
 
@@ -16,18 +17,20 @@ const getNewPath = () => {
         count++;
     }
 
-    console.log(count);
-
     return getFilePath();
+};
+
+const getFilePathById = (id)=> {
+    return dataStorePath + "/" + id + ".json";
 };
 
 getNewPath();
 
 const recipe = {
-    add: (objStr) => {
+    add: (obj) => {
         var path = getNewPath();
-        objStr.id = count;
-        fs.writeFile(path, JSON.stringify(objStr), (err) => {
+        obj.id = count;
+        fs.writeFile(path, JSON.stringify(obj), (err) => {
             // throws an error, you could also catch it here
             if (err) {
                 console.log("error writing data: ", err);
@@ -46,6 +49,15 @@ const recipe = {
         });
 
         return JSON.stringify(retVal);
+    },
+    save: (obj) => {
+        jsonfile.writeFile(getFilePathById(obj.id), obj, (err)=> {
+            // throws an error, you could also catch it here
+            if (err) {
+                console.log("error writing data: ", err);
+                throw err;
+            }
+        });
     }
 };
 

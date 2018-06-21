@@ -34,10 +34,21 @@
                         @click="addCustom(outputArr, outputCustom);outputCustom='';">Add
                 </button>
             </formElement>
-            <itemList display="Inputs" :objArr="inputArr"/>
-            <itemList display="Outputs" :objArr="outputArr"/>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <itemList display="Inputs" :objArr="inputArr"/>
+                </div>
+                <div class="col-md-6">
+                    <itemList display="Outputs" :objArr="outputArr"/>
+                </div>
+            </div>
 
             <formElement>
+                <button type="button" class="btn btn-primary"
+                        @click="getList">
+                    Refresh
+                </button>
                 <button slot="button" type="button" class="btn btn-success"
                         @click="save">
                     Save
@@ -79,24 +90,26 @@
             this.$nextTick(
                     function () {
                         apiService.reload().then(
-                                function () {
-                                    apiService.getList().then(function (list) {
-                                        var holder = [];
-
-                                        list.forEach(function (element) {
-                                            holder.push({
-                                                text: element.name,
-                                                value: element.id
-                                            });
-                                        });
-
-                                        self.itemIDList = holder;
-                                    })
-                                }
+                                this.getList
                         );
                     });
         },
         methods: {
+            getList: function () {
+                var self = this;
+                apiService.getList().then(function (list) {
+                    var holder = [];
+
+                    list.forEach(function (element) {
+                        holder.push({
+                            text: element.name,
+                            value: element.id
+                        });
+                    });
+
+                    self.itemIDList = holder;
+                })
+            },
             addId: function (arr, id) {
                 if (id != null && id.length > 0) {
                     arr.push(

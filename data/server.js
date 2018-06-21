@@ -3,7 +3,7 @@
  */
 const fs = require('fs');
 const express = require('express');
-
+const jsonfile = require('jsonfile');
 
 const dataStorePath = "./dataStore";
 const indexStore = dataStorePath + "/index.json";
@@ -19,6 +19,7 @@ const cors = require('cors');
 var app = express();
 app.use(cors());
 
+app.use(express.static('../UI/dist'));
 
 app.get('/', function (req, res) {
     res.send('Obsession engine online.');
@@ -29,13 +30,13 @@ app.get('/api/addRecipe', function (req, res) {
         var recipeStr = req.query.recipe;
 
         if (recipeStr == undefined) {
-            res.send("no item defined");
+            res.send("no recipe defined");
         } else {
             recipe.add(JSON.parse(recipeStr));
-            res.send("item added");
+            res.send("recipe added");
         }
     } catch (e) {
-        res.send("item failed to be added");
+        res.send("recipe failed to be added");
     }
 });
 
@@ -47,30 +48,59 @@ app.get('/api/getRecipes', function (req, res) {
     }
 });
 
+app.get('/api/saveRecipe', function (req, res) {
+    try {
+        var recipeStr = req.query.recipe;
+
+        if (recipeStr == undefined) {
+            res.send("no recipe defined");
+        } else {
+            recipe.save(JSON.parse(recipeStr));
+            res.send("recipe saved");
+        }
+    } catch (e) {
+        res.send("recipe failed to be saved");
+    }
+});
+
 app.get('/api/getItem', function (req, res) {
     try {
-        var id = req.query.id;
-        var itemObj = require(dataStorePath + "/" + id + ".json");
-        res.send(JSON.stringify(itemObj));
-    } catch (e) {
+        jsonfile.readFile(
+            dataStorePath + "/" + req.query.id + ".json",
+            function (err, obj) {
+                if (err) {
+                    res.send("item not found");
+                }
+                res.send(JSON.stringify(obj));
+            }
+        );
+    } catch (err) {
         res.send("item not found");
     }
 });
 
 app.get('/api/getList', function (req, res) {
     var ordered = [];
-    var unordered = require(indexStore);
-    Object.keys(unordered)
-        .sort()
-        .forEach((key) => {
-            ordered.push(
-                {
-                    name: key,
-                    id: unordered[key]
-                }
-            );
-        });
-    res.send(JSON.stringify(ordered));
+    jsonfile.readFile(
+        indexStore,
+        function (err, unordered) {
+            if (err) {
+                res.send("getList err: ", err);
+            }
+
+            Object.keys(unordered)
+                .sort()
+                .forEach((key) => {
+                    ordered.push(
+                        {
+                            name: key,
+                            id: unordered[key]
+                        }
+                    );
+                });
+            res.send(JSON.stringify(ordered));
+        }
+    );
 });
 
 app.get('/api/getTimestamp', function (req, res) {
