@@ -5,10 +5,10 @@
         </a>
         <a class="list-group-item" v-for="(obj, index) in processedArr" :title="obj.desc">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-7">
                     {{obj.name}} <img style="height: 20px;width: auto;" :src="obj.icon" v-if="obj.icon != null"/>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="input-group">
                         <input type="text" style="width: 100px;" class="form-control" :value="obj.chaosValue"
                                @change="updateChaos(obj, $event)">
