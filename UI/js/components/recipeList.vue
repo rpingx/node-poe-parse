@@ -13,7 +13,7 @@
                         <input type="text" style="width: 100px;" class="form-control" :value="obj.chaosValue"
                                @change="updateChaos(obj, $event)">
                         <span class="input-group-addon" style="width: 70px;">c</span>
-                        <span class="input-group-addon"><a href="#" @click="openUrl(obj)">$</a></span>
+                        <span class="input-group-addon"><a style="cursor: pointer;" @click="openUrl(obj)">@</a></span>
                         <input type="text" style="width: 50px;" class="form-control" :value="obj.url"
                                @click="selectAll" @change="updateUrl(obj, $event)">
                     </div>
