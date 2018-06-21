@@ -15,12 +15,12 @@
             </gridElement>
             <div class="col-md-6">
                 <list display="Inputs" :objArr="recipeObj.input"
-                      @updateURL="updateInput"
+                      @updateObj="updateInput"
                       @updateChaos="updateCost"/>
             </div>
             <div class="col-md-6">
                 <list display="Outputs" :objArr="recipeObj.output"
-                      @updateURL="updateOutput"
+                      @updateObj="updateOutput"
                       @updateChaos="updatePrice"/>
             </div>
         </div>
@@ -81,6 +81,7 @@
                 console.log("price: ", this.price);
             },
             saveRecipe: function () {
+                console.log(this.recipeObj);
                 apiService.saveRecipe(this.recipeObj);
             }
         }

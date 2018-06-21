@@ -50,7 +50,7 @@
                 this.processedArr.forEach(
                         function (entry) {
                             if (entry.chaosValue != undefined) {
-                                val += entry.chaosValue;
+                                val += parseFloat(entry.chaosValue);
                             }
                         }
                 );
@@ -71,9 +71,11 @@
                                                         icon: data.icon,
                                                         desc: data.desc,
                                                         url: item.url,
-                                                        chaosValue: data.chaosValue,
-                                                        update: function (url) {
-                                                            item.url = url;
+                                                        chaosValue: data.chaosValue == undefined
+                                                                ? item.chaosValue
+                                                                : data.chaosValue,
+                                                        ref: function () {
+                                                            return item;
                                                         }
                                                     }
                                             );
@@ -84,8 +86,9 @@
                                         {
                                             name: item.name,
                                             url: item.url,
-                                            update: function (url) {
-                                                item.url = url;
+                                            chaosValue: item.chaosValue,
+                                            ref: function () {
+                                                return item;
                                             }
                                         }
                                 );
@@ -101,13 +104,17 @@
             updateUrl: function (obj, e) {
                 var url = e.target.value;
                 obj.url = url;
-                obj.update(url);
+                obj.ref().url = url;
 
-                this.$emit('updateURL', this.objArr);
+                this.$emit('updateObj', this.objArr);
             },
             updateChaos: function (obj, e) {
-                obj.chaosValue = e.target.value;
+                var chaosValue = e.target.value;
+                obj.chaosValue = chaosValue;
+                obj.ref().chaosValue = chaosValue;
                 this.updateTotal();
+
+                this.$emit('updateObj', this.objArr);
             },
             openUrl: function (obj) {
                 window.open(obj.url);
