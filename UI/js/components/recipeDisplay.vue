@@ -51,8 +51,9 @@
         },
         computed: {
             'profit': function () {
-                console.log("calc profit");
-                return this.price - this.cost;
+                var profit = this.price - this.cost;
+                this.$emit('updateProfit', profit);
+                return profit;
             }
         },
         mounted: function () {
@@ -73,15 +74,11 @@
             },
             updateCost: function (val) {
                 this.cost = val;
-                console.log("cost: ", this.cost);
-
             },
             updatePrice: function (val) {
                 this.price = val;
-                console.log("price: ", this.price);
             },
             saveRecipe: function () {
-                console.log(this.recipeObj);
                 apiService.saveRecipe(this.recipeObj);
             }
         }
