@@ -58,7 +58,11 @@
                 var orig = JSON.stringify(this.recipeArr);
                 var self = this;
                 this.recipeArr.sort(function (objA, objB) {
-                    return objB.profit - objA.profit;
+                    var diff = objB.profit - objA.profit;
+                    if (diff == 0) {
+                        return objB.id - objA.id;
+                    }
+                    return diff;
                 });
 
                 if (JSON.stringify(this.recipeArr).localeCompare(orig) != 0) {
