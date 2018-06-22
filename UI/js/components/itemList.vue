@@ -22,7 +22,17 @@
             };
         },
         watch: {
-            'objArr': function () {
+            'objArr': 'process'
+        },
+        mounted: function () {
+            var self = this;
+            //  This is really ugly... maybe too ugly.
+            this.$nextTick(
+                    self.process
+            );
+        },
+        methods: {
+            process: function () {
                 var self = this;
                 var holder = [];
 
@@ -48,7 +58,6 @@
                                         {
                                             name: item.name,
                                             removal: function () {
-                                                console.log(self.objArr.indexOf(item));
                                                 self.objArr.splice(self.objArr.indexOf(item), 1);
                                             }
                                         }

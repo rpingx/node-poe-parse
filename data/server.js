@@ -70,8 +70,9 @@ app.get('/api/getItem', function (req, res) {
             function (err, obj) {
                 if (err) {
                     res.send("item not found");
+                } else {
+                    res.send(JSON.stringify(obj));
                 }
-                res.send(JSON.stringify(obj));
             }
         );
     } catch (err) {
@@ -86,19 +87,19 @@ app.get('/api/getList', function (req, res) {
         function (err, unordered) {
             if (err) {
                 res.send("getList err: ", err);
+            } else {
+                Object.keys(unordered)
+                    .sort()
+                    .forEach((key) => {
+                        ordered.push(
+                            {
+                                name: key,
+                                id: unordered[key]
+                            }
+                        );
+                    });
+                res.send(JSON.stringify(ordered));
             }
-
-            Object.keys(unordered)
-                .sort()
-                .forEach((key) => {
-                    ordered.push(
-                        {
-                            name: key,
-                            id: unordered[key]
-                        }
-                    );
-                });
-            res.send(JSON.stringify(ordered));
         }
     );
 });

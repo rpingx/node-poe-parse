@@ -43,8 +43,37 @@ const recipe = {
         var files = fs.readdirSync(dataStorePath);
 
         files.forEach(file => {
+            var obj = JSON.parse(fs.readFileSync(dataStorePath + "/" + file, 'utf-8'));
+            if (obj.profit == undefined) {
+                obj.profit = 0;
+            }
+
+            obj.input.forEach(
+                function (entry) {
+                    if (entry.url == undefined) {
+                        entry.url = "";
+                    }
+
+                    if (entry.chaosValue == undefined) {
+                        entry.chaosValue = "";
+                    }
+                }
+            );
+
+            obj.output.forEach(
+                function (entry) {
+                    if (entry.url == undefined) {
+                        entry.url = "";
+                    }
+
+                    if (entry.chaosValue == undefined) {
+                        entry.chaosValue = "";
+                    }
+                }
+            );
+
             retVal.push(
-                JSON.parse(fs.readFileSync(dataStorePath + "/" + file, 'utf-8'))
+                obj
             );
         });
 

@@ -24,6 +24,10 @@ const reload = () => {
         });
     }
 
+    if (!fs.existsSync(dataStorePath)) {
+        fs.mkdirSync(dataStorePath);
+    }
+
     fs.writeFileSync(indexStore, JSON.stringify({}));
 
     poeNinja.reload();

@@ -51,8 +51,21 @@
         },
         computed: {
             'profit': function () {
-                var profit = this.price - this.cost;
-                this.$emit('updateProfit', profit);
+                var self = this;
+                var profit = parseFloat(this.price) - parseFloat(this.cost);
+
+                if (!isNaN(profit)) {
+                    this.recipeObj.profit = profit;
+
+                    var holder = JSON.parse(JSON.stringify(this.recipeObj));
+                    this.debouncer(function () {
+                                self.saveRecipe(holder);
+                            }
+                    );
+
+                    this.$emit('updateProfit', profit);
+                }
+
                 return profit;
             }
         },
@@ -65,12 +78,32 @@
         },
         methods: {
             updateInput: function (val) {
-                this.recipeObj.input = val;
-                this.debouncer(this.saveRecipe);
+                var self = this;
+                var orig = JSON.stringify(this.recipeObj.input);
+                var newVal = JSON.stringify(val);
+
+                if (newVal.localeCompare(orig) != 0) {
+                    this.recipeObj.input = val;
+                    var holder = JSON.parse(JSON.stringify(this.recipeObj));
+                    this.debouncer(function () {
+                                self.saveRecipe(holder);
+                            }
+                    );
+                }
             },
             updateOutput: function (val) {
-                this.recipeObj.output = val;
-                this.debouncer(this.saveRecipe);
+                var self = this;
+                var orig = JSON.stringify(this.recipeObj.output);
+                var newVal = JSON.stringify(val);
+
+                if (newVal.localeCompare(orig) != 0) {
+                    this.recipeObj.output = val;
+                    var holder = JSON.parse(JSON.stringify(this.recipeObj));
+                    this.debouncer(function () {
+                                self.saveRecipe(holder);
+                            }
+                    );
+                }
             },
             updateCost: function (val) {
                 this.cost = val;
@@ -78,8 +111,8 @@
             updatePrice: function (val) {
                 this.price = val;
             },
-            saveRecipe: function () {
-                apiService.saveRecipe(this.recipeObj);
+            saveRecipe: function (obj) {
+                apiService.saveRecipe(obj);
             }
         }
     };

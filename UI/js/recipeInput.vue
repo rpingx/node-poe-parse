@@ -84,13 +84,20 @@
                 outputArr: []
             };
         },
+        watch: {
+            'itemIDList' : function () {
+                if (this.itemIDList.length < 1000) {
+                    setTimeout(this.getList, 1000);
+                }
+            }
+        },
         mounted: function () {
             var self = this;
             //  This is really ugly... maybe too ugly.
             this.$nextTick(
                     function () {
                         apiService.reload().then(
-                                this.getList
+                                self.getList
                         );
                     });
         },
@@ -130,7 +137,7 @@
             },
             save: function () {
                 if (this.inputArr.length == 0 && this.outputArr.length == 0) {
-                    console.log("no data; no saving");
+                    console.log("no data; not saving");
                 } else {
                     apiService.addRecipe({
                         input: this.inputArr,

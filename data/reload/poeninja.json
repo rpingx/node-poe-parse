@@ -9,6 +9,7 @@
   "https://poe.ninja/api/data/itemoverview?league=Incursion&type=UniqueFlask",
   "https://poe.ninja/api/data/itemoverview?league=Incursion&type=UniqueWeapon",
   "https://poe.ninja/api/data/itemoverview?league=Incursion&type=UniqueArmour",
-  "https://poe.ninja/api/data/itemoverview?league=Incursion&type=UniqueAccessory"
+  "https://poe.ninja/api/data/itemoverview?league=Incursion&type=UniqueAccessory",
+  "https://poe.ninja/api/data/itemoverview?league=Incursion&type=Map"
 ]
 
