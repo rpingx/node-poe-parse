@@ -7,7 +7,7 @@
     "prod": "webpack --progress --hide-modules --env.apiurl=http://localhost/api/"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "fast-deep-equal": "^2.0.1",
     "vue": "^2.5.16",
