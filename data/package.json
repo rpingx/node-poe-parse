@@ -2,7 +2,7 @@
   "name": "poe-parse-data",
   "version": "1.0.0",
   "dependencies": {
-    "async": "^2.6.1",
+    "async": "^3.2.2",
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "jsonfile": "^4.0.0",
